@@ -1,0 +1,114 @@
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Encriptador | Grupo 5 - Challengue</title>
+</head>
+<body>
+    <div class="main-container">
+        <div class="encrypt-container">
+            <div class="logo">
+                <img src="a.svg" alt="">
+            </div>
+            <div class="title">
+                <p>ENCRIPTA TU MENSAJE</p>
+            </div>
+            <div class="text-collector">
+                <textarea class="text-input" id="textInput" cols="30" rows="10" placeholder="Ingrese el texto aquí"></textarea>
+            </div>
+            <div class="text-result">
+                <div class="card">
+                    <div class="without-text" id="withoutText">
+                        <div class="find-img" id="findImg">
+                            <img src="find.svg" alt="">
+                        </div>
+                        <div class="no-message">
+                            <p class="message">No se han encontrado mensajes</p>
+                        </div>
+                        <div class="input-message">
+                            <p class="place-holder">Escribe lo que deseas encriptar o desencriptar</p>
+                        </div>    
+                    </div>
+                    <div class="with-text" id="withText">
+                        <div class="text-container">
+                            <textarea class="text-encrypted" id="textEncrypted" cols="40" rows="30" onmousedown="return false" onselectstart="return false"></textarea>
+                        </div>
+                        <div class="copy">
+                            <button type="button" class="copy-button" id="copyButton" onclick="copy()">Copiar</button>
+                        </div>        
+                    </div>
+                </div>
+            </div>
+            <div class="buttons-area">
+                <div class="disclaimer">
+                    <img clas="img-sign" src="sign.svg" alt="">
+                    <h1 class="text-sign">No uses mayúsculas ni acentos porfavor</h1>    
+                </div>
+                <div class="buttons-container">
+                    <button type="button" class="left-button" id="encryptButton" onclick="encrypt()">Encriptar</button>
+                    <button type="button" class="right-button" id="decryptButton" onclick="decrypt()">Desencriptar</button>    
+                </div>    
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <p>Proyecto encriptador hecho por <a href="https://github.com/LMB96">Manuel Baldonedo</a></p>
+    </footer>
+</body>
+<script>
+    function encrypt() {
+        var text = document.getElementById('textInput').value;
+
+        if (/[A-Z]/.test(text) || /[Á-ú]/.test(text) || /^\s/.test(text)) {
+            alert('Por favor, modifica el texto para cumplir con las siguientes restricciones: no debe tener un espacio en blanco al principio, no debe contener letras mayúsculas o acentos. Te agradecería que realices esta corrección.');
+            return;
+        }
+
+        if (text == '') {
+            document.getElementById('withoutText').style.display = 'flex';
+            document.getElementById('withText').style.display = 'none';
+            return;
+        } else {
+            var encryptedText = text.replace(/e/igm, 'enter');
+            var encryptedText = encryptedText.replace(/i/igm, 'imes');
+            var encryptedText = encryptedText.replace(/a/igm, 'ai');
+            var encryptedText = encryptedText.replace(/o/igm, 'ober');
+            var encryptedText = encryptedText.replace(/u/igm, 'ufat');
+        }
+
+        document.getElementById('withoutText').style.display = 'none';
+        document.getElementById('withText').style.display = 'flex';
+        document.getElementById('textEncrypted').innerHTML = encryptedText;
+    }
+
+    function decrypt() {
+        var encryptedText = document.getElementById('textEncrypted').value;
+
+        if (encryptedText == '') {
+            document.getElementById('withoutText').style.display = 'flex';
+            document.getElementById('withText').style.display = 'none';
+            return;
+        } else {
+            var text = encryptedText.replace(/enter/igm, 'e');
+            var text = text.replace(/imes/igm, 'i');
+            var text = text.replace(/ai/igm, 'a');
+            var text = text.replace(/ober/igm, 'o');
+            var text = text.replace(/ufat/igm, 'u');
+        }
+
+        document.getElementById('textEncrypted').innerHTML = text;
+    }
+
+    function copy() {
+        var encryptedText = document.querySelector('#textEncrypted');
+        encryptedText.select();
+        document.execCommand('copy');
+        document.getElementById('textInput').value = '';
+        document.getElementById('textInput').placeholder = 'Pega el texto que acabas de copiar';
+        console.log(encryptedText);
+    }
+</script>
+</html>
